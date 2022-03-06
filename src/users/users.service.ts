@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { Repository, UpdateResult } from 'typeorm';
@@ -15,8 +15,12 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(new User(createUserDto));
+  findOneByName(name: string): Promise<User | undefined> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where('user.name = :name', { name: name })
+      .addSelect('user.password')
+      .getOne();
   }
 
   findAll(params: UserParams): Promise<Pagination<User>> {
@@ -27,8 +31,17 @@ export class UsersService {
     });
   }
 
-  findOne(id: number) {
-    return this.userRepository.findOne(id);
+  async findOne(id: number): Promise<User> {
+    const user = await this.userRepository.findOne(id);
+    if (!user || !id)
+      throw new BadRequestException('No se encontro el usuario');
+    return user;
+  }
+
+  create(createUserDto: CreateUserDto): Promise<User> {
+    return this.userRepository.save(
+      new User({ active: true, ...createUserDto }),
+    );
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
