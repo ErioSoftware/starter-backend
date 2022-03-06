@@ -18,10 +18,10 @@ import { JwtAuthGuard } from './common/auth/jwt/jwt-auth.guard';
   ],
   providers: [
     //uncomment this to require auth everywhere
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
   controllers: [AppController],
 })
