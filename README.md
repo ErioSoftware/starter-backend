@@ -1,4 +1,4 @@
-# Clambert
+# Backend Starter
 
 Backend starter project in Nest.js.
 Includes:
