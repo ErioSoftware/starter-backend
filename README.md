@@ -11,6 +11,12 @@ Includes:
 - Passport Auth
 - Data setup script for testing locally
 
+##### To run for the first time
+
+- yarn install
+- Cambiar el nombre del contenedor en docker-compose
+- docker-compose up --build
+
 ##### To generate Domain Entity Boilerplate
 
 ```
