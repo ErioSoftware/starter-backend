@@ -12,13 +12,19 @@ import {
   Query,
   UseFilters,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { QueryFailedExceptionFilter } from '../common/filters/queryFailedExceptionFilter';
 import { Update<%= Name %>Dto } from './dto/update-<%= name %>.dto';
 import { <%= Name %>Params } from './dto/<%= name %>.params';
 import { <%= h.inflection.pluralize(Name) %>Service } from './<%= h.changeCase.paramCase(h.inflection.pluralize(name)) %>.service';
 import { Create<%= Name %>Dto } from './dto/create-<%= name %>.dto';
 
+@ApiBearerAuth()
 @ApiTags('<%= h.inflection.pluralize(Name) %>')
 @Controller('<%= h.changeCase.paramCase(h.inflection.pluralize(name)) %>')
 export class <%= h.inflection.pluralize(Name) %>Controller {

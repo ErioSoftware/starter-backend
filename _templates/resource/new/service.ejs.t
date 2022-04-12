@@ -29,7 +29,7 @@ export class <%= h.inflection.pluralize(Name) %>Service {
   async findOne(id: number): Promise<<%= Name %>> {
     const <%= name %> = await this.<%= name %>Repository.findOne(id);
     if (!<%= name %> || !id)
-      throw new BadRequestException('No se encontro');
+      throw new BadRequestException('Not Found');
     return <%= name %>;
   }
 
