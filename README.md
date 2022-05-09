@@ -14,7 +14,7 @@ Includes:
 ##### To run for the first time
 
 - yarn install
-- Cambiar el nombre del contenedor en docker-compose
+- Change container name in docker-compose
 - docker-compose up --build
 
 ##### To generate Domain Entity Boilerplate
