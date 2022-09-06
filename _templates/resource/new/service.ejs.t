@@ -27,7 +27,7 @@ export class <%= h.inflection.pluralize(Name) %>Service {
   }
 
   async findOne(id: number): Promise<<%= Name %>> {
-    const <%= name %> = await this.<%= name %>Repository.findOne(id);
+    const <%= name %> = await this.<%= name %>Repository.findOne({ where: { id } });
     if (!<%= name %> || !id)
       throw new BadRequestException('Not Found');
     return <%= name %>;

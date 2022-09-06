@@ -32,7 +32,7 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne({ where: { id } });
     if (!user || !id)
       throw new BadRequestException('No se encontro el usuario');
     return user;

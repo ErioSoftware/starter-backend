@@ -5,6 +5,7 @@ import {
   UseGuards,
   Body,
   UseFilters,
+  Get,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './common/auth/auth.service';
@@ -14,7 +15,6 @@ import { QueryFailedExceptionFilter } from './common/filters/queryFailedExceptio
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
 
-@ApiTags('Auth')
 @Controller()
 export class AppController {
   constructor(
@@ -23,6 +23,14 @@ export class AppController {
   ) {}
 
   @Public()
+  @ApiTags('Health')
+  @Get('/ping')
+  async ping() {
+    return { status: 'OK' };
+  }
+
+  @Public()
+  @ApiTags('Auth')
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
@@ -30,6 +38,7 @@ export class AppController {
   }
 
   @Public()
+  @ApiTags('Auth')
   @ApiCreatedResponse()
   @UseFilters(QueryFailedExceptionFilter)
   @Post('auth/signup')

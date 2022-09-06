@@ -9,6 +9,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.use(Helmet());
+  app.setGlobalPrefix('/api/v1');
 
   const config = new DocumentBuilder()
     .setTitle('API')
@@ -17,7 +18,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   app.enableCors();
   await app.listen(process.env.PORT || '5000');
