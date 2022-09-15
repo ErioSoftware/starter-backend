@@ -33,15 +33,12 @@ export class UsersService {
 
   async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
-    if (!user || !id)
-      throw new BadRequestException('No se encontro el usuario');
+    if (!user || !id) throw new BadRequestException('Not found');
     return user;
   }
 
   create(createUserDto: CreateUserDto): Promise<User> {
-    return this.userRepository.save(
-      new User({ active: true, ...createUserDto }),
-    );
+    return this.userRepository.save(new User(createUserDto));
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {

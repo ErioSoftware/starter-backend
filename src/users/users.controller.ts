@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Query,
   UseFilters,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { QueryFailedExceptionFilter } from '../common/filters/queryFailedExceptionFilter';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserParams } from './dto/user.params';
 import { UsersService } from './users.service';
@@ -29,6 +31,13 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
+  }
+
+  @ApiCreatedResponse()
+  @UseFilters(QueryFailedExceptionFilter)
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @ApiOkResponse()
