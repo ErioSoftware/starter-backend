@@ -5,6 +5,6 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "name": "Abel",
+  "name": "Test",
   "password": "12345678"
 }'
