@@ -2,18 +2,21 @@ version: '3.7'
 
 services:
   postgres:
-    image: postgres
+    image: postgres:15.1
     ports:
-      - '35432:5432'
+      - '${DB_PORT}:5432'
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    env_file:
+      - .env
+    volumes:
+      - ./data:/var/lib/postgresql/data
 
   main:
     build:
       context: .
-      target: development
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

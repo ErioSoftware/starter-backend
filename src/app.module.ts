@@ -4,13 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { dbConfig } from './common/config';
 import { LoggerMiddleware } from './common/logger/logger.middleware';
-import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dbConfig),
     EventEmitterModule.forRoot(),
-    UsersModule,
   ],
   controllers: [AppController],
 })
