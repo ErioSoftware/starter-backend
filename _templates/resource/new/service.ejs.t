@@ -4,7 +4,7 @@ to: src/<%= h.changeCase.paramCase(h.inflection.pluralize(name)) %>/<%= h.change
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Create<%= Name %>Dto } from './dto/create-<%= name %>.dto';
 import { Update<%= Name %>Dto } from './dto/update-<%= name %>.dto';
 import { <%= Name %>Params } from './dto/<%= name %>.params';
@@ -37,11 +37,18 @@ export class <%= h.inflection.pluralize(Name) %>Service {
     return this.<%= name %>Repository.save(new <%= Name %>(create<%= Name %>Dto));
   }
 
-  update(id: number, update<%= Name %>Dto: Update<%= Name %>Dto): Promise<UpdateResult> {
-    return this.<%= name %>Repository.update(id, update<%= Name %>Dto);
+  async update(
+    id: number,
+    update<%= Name %>Dto: Update<%= Name %>Dto,
+  ): Promise<<%= Name %>> {
+    const <%= name %> = await this.findOne(id);
+    Object.assign(<%= name %>, update<%= Name %>Dto);
+    return await this.<%= name %>Repository.save(<%= name %>);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<<%= Name %>> {
+    const <%= name %> = await this.findOne(id);
     await this.<%= name %>Repository.delete(id);
+    return <%= name %>;
   }
 }

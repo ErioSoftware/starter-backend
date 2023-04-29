@@ -16,29 +16,50 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
     const context = host.switchToHttp();
     const response = context.getResponse();
     const request = context.getRequest();
-    let message: string;
-    let code: string;
 
     if (dupKeyRegex.test(exception.message)) {
-      message = 'Ya existe.';
-      code = config.errorCodes.DUP_KEY;
+      response
+        .status(HttpStatus.BAD_REQUEST)
+        .json(this.buildDuplicateErrorMessage(exception, request));
     } else if (violatesFKRegec.test(exception.message)) {
-      message =
-        'Se esta violando una clave foranea al eliminar/modificar esta entidad.';
-      code = config.errorCodes.VIO_FK;
+      response.status(HttpStatus.BAD_REQUEST).json({
+        path: request.url,
+        statusCode: HttpStatus.BAD_REQUEST,
+        timestamp: new Date().toISOString(),
+        message: 'Violates foreign key constraint.',
+        code: config.errorCodes.VIO_FK,
+      });
     } else {
-      message = 'Error desconocido.';
-      code = config.errorCodes.UNK_ERR;
+      response.status(HttpStatus.BAD_REQUEST).json({
+        path: request.url,
+        statusCode: HttpStatus.BAD_REQUEST,
+        timestamp: new Date().toISOString(),
+        message: 'Unknown error.',
+        code: config.errorCodes.UNK_ERR,
+      });
     }
+  }
 
-    const errorResponse = {
+  private buildDuplicateErrorMessage(
+    exception: QueryFailedError,
+    request: any,
+  ) {
+    // Strings have the following structure "Key (<<attribute>>)=(<<value>>) already exists."
+    // This regex captures the attribute and the value.
+    const regex = /\((.*?)\)=\((.*?)\)/;
+    const matches = exception.driverError.detail.match(regex);
+    const attribute = matches[1];
+    const value = matches[2];
+    return {
       path: request.url,
       statusCode: HttpStatus.BAD_REQUEST,
       timestamp: new Date().toISOString(),
-      message,
-      code,
+      code: config.errorCodes.DUP_KEY,
+      data: {
+        attribute,
+        value,
+        table: exception.driverError.table,
+      },
     };
-
-    response.status(HttpStatus.BAD_REQUEST).json(errorResponse);
   }
 }
