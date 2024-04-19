@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+export const MAX_INT = 999999;
 export const config = {
   jwtSecret: process.env.JWT_SECRET,
   errorCodes: {

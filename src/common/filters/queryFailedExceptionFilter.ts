@@ -44,22 +44,12 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
     exception: QueryFailedError,
     request: any,
   ) {
-    // Strings have the following structure "Key (<<attribute>>)=(<<value>>) already exists."
-    // This regex captures the attribute and the value.
-    const regex = /\((.*?)\)=\((.*?)\)/;
-    const matches = exception.driverError.detail.match(regex);
-    const attribute = matches[1];
-    const value = matches[2];
     return {
       path: request.url,
       statusCode: HttpStatus.BAD_REQUEST,
       timestamp: new Date().toISOString(),
       code: config.errorCodes.DUP_KEY,
-      data: {
-        attribute,
-        value,
-        table: exception.driverError.table,
-      },
+      data: exception.driverError,
     };
   }
 }

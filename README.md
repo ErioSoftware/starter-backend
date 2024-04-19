@@ -20,5 +20,5 @@ Includes:
 ##### To generate Domain Entity Boilerplate
 
 ```
-hygen resource new --name domainEntityName
+hygen resource new
 ```
