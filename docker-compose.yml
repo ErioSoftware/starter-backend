@@ -21,6 +21,8 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     command: npm run start:dev
+    environment:
+      - DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}"
     env_file:
       - .env
     depends_on:
