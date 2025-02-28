@@ -10,3 +10,13 @@ export class PaginationParams {
   @ApiProperty({ required: false, example: 'id:asc' })
   order?: string;
 }
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  meta: {
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+  };
+}

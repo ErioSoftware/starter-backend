@@ -24,6 +24,7 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@nestjs/cli": "^11.0.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.1",
@@ -43,12 +44,12 @@
     "pg": "^8.13.3",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
+    "drizzle-kit": "^0.30.5",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
-    "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
     "@swc/cli": "^0.6.0",
@@ -59,7 +60,6 @@
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.11.11",
     "@types/supertest": "^6.0.2",
-    "drizzle-kit": "^0.30.5",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
