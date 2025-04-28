@@ -7,12 +7,19 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { ApiTags } from '@nestjs/swagger';
 import { PostService } from './post.service';
 import { CreatePostDto, UpdatePostDto, PostQueryParams } from './post.dto';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 
+@ApiBearerAuth()
 @ApiTags('Posts')
 @Controller('post')
 export class PostController {

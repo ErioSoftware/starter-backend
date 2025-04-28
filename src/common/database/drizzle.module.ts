@@ -13,7 +13,6 @@ export const DrizzleProvider = Symbol('drizzle-connection');
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const dbUrl = configService.get<string>('DATABASE_URL');
-        console.log(dbUrl);
         const pool = new Pool({ connectionString: dbUrl });
         return drizzle(pool, { schema }) as NodePgDatabase<typeof schema>;
       },

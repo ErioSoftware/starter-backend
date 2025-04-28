@@ -12,6 +12,6 @@ export class CreatePostDto {
 export class UpdatePostDto extends PartialType(CreatePostDto) {}
 
 export class PostQueryParams extends PaginationParams {
-  @ApiProperty({ example: 'title', required: false })
+  @ApiProperty({ required: false })
   title?: string;
 }
